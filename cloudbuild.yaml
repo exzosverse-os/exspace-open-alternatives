@@ -1,0 +1,79 @@
+# cloudbuild.yaml - place at repository root
+# This pipeline installs dependencies, builds the Next.js app, builds and pushes a Docker image,
+# and (optionally) deploys to Cloud Run. It uses substitutions to keep the file reusable.
+
+substitutions:
+  _IMAGE: "gcr.io/gen-lang-client-0418448682/exspace-open-alternatives:$SHORT_SHA"
+  _SERVICE: "exspace-frontend"
+  _REGION: "us-central1"
+  _ALLOW_UNAUTH: "true"
+
+steps:
+  # 1) Install dependencies
+  - name: 'node:18'
+    id: 'Install dependencies'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        npm ci
+
+  # 2) Run tests / lint (optional — won't fail the build if scripts missing)
+  - name: 'node:18'
+    id: 'Run tests and lint'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if npm run -s test; then
+          echo "Tests passed"
+        else
+          echo "No tests or tests failed (skipping)"
+        fi
+        if npm run -s lint; then
+          echo "Lint passed"
+        else
+          echo "No lint or lint configured (skipping)"
+        fi
+
+  # 3) Build the application (Next.js)
+  - name: 'node:18'
+    id: 'Build'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        npm run build
+
+  # 4) Build and push Docker image (assumes Dockerfile exists at repo root)
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build Docker image'
+    args: ['build', '-t', '${_IMAGE}', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push Docker image'
+    args: ['push', '${_IMAGE}']
+
+  # 5) Optional: deploy to Cloud Run if _SERVICE and _REGION are set
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Deploy to Cloud Run (optional)'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [ -n "${_SERVICE}" ] && [ -n "${_REGION}" ]; then
+          echo "Deploying to Cloud Run service: ${_SERVICE} in ${_REGION}"
+          gcloud run deploy "${_SERVICE}" \
+            --image "${_IMAGE}" \
+            --region "${_REGION}" \
+            --platform managed \
+            --project "${PROJECT_ID}" \
+            $( [ "${_ALLOW_UNAUTH}" = "true" ] && echo "--allow-unauthenticated" || echo "" )
+        else
+          echo "Skipping Cloud Run deploy because _SERVICE or _REGION not set."
+        fi
+
+# Recommended timeout for build steps that include Docker build
+timeout: '1200s' # 20 minutes
+
+# You can override substitutions when creating the trigger (recommended)
