@@ -2,20 +2,13 @@ import { withContentCollections } from "@content-collections/next"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  reactStrictMode: false,
-  devIndicators: false,
-  allowedDevOrigins: ["openalternative.local"],
+  cacheComponents: true,
 
-  experimental: {
-    ppr: true,
-    useCache: true,
-
-    optimizePackageImports: [
-      "@content-collections/core",
-      "@content-collections/mdx",
-      "@content-collections/next",
-    ],
-  },
+  // optimizePackageImports: [
+  //   "@content-collections/core",
+  //   "@content-collections/mdx",
+  //   "@content-collections/next",
+  // ],
 
   typescript: {
     ignoreBuildErrors: true,

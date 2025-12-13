@@ -1,7 +1,7 @@
 import { performance } from "node:perf_hooks"
 import { type Prisma, ToolStatus } from "@prisma/client"
 import type { SearchSimilarDocumentsParams } from "meilisearch"
-import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
+import { cacheLife, cacheTag } from "next/cache"
 import { alternativeManyPayload, alternativeOnePayload } from "~/server/web/alternatives/payloads"
 import type { FilterSchema } from "~/server/web/shared/schema"
 import { db } from "~/services/db"

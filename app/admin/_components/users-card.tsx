@@ -1,5 +1,5 @@
 import { eachDayOfInterval, format, isSameDay, startOfDay, subDays } from "date-fns"
-import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
+import { cacheLife, cacheTag } from "next/cache"
 import type { ComponentProps } from "react"
 import { Chart, type ChartData } from "~/app/admin/_components/chart"
 import { Card, CardDescription, CardHeader } from "~/components/common/card"

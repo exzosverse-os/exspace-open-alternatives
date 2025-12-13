@@ -196,3 +196,4 @@ storybook-static
 /blob-report/
 /playwright/.cache/
 
+.env*.local

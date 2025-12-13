@@ -1,5 +1,5 @@
 import { eachDayOfInterval, format, startOfDay, subDays } from "date-fns"
-import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "next/cache"
+import { cacheLife, cacheTag } from "next/cache"
 import type { ComponentProps } from "react"
 import wretch from "wretch"
 import { Chart, type ChartData } from "~/app/admin/_components/chart"
