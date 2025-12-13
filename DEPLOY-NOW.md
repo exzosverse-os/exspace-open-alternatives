@@ -51,11 +51,21 @@
 ### 🌐 **Configurar DNS**
 
 ```bash
-# No seu provedor DNS
+# Domínio Público (exzosverse.com) - Vercel
 exzosverse.com           A     76.76.19.123
 *.exzosverse.com         A     76.76.19.123
-exzosverse.online        A     76.76.19.124
+
+# Domínio Privado (exzosverse.online) - Serviços
+exzosverse.online        A     76.76.19.124  
 *.exzosverse.online      A     76.76.19.124
+
+# Subdomínios Específicos
+api.exzosverse.com       CNAME exzosverse.com
+cdn.exzosverse.com       CNAME exzosverse.com
+auth.exzosverse.online   A     76.76.19.124
+data.exzosverse.online   A     76.76.19.124
+cache.exzosverse.online  A     76.76.19.124
+search.exzosverse.online A     76.76.19.124
 ```
 
 ### 🔧 **Pós-Deploy**
@@ -63,13 +73,13 @@ exzosverse.online        A     76.76.19.124
 1. **OAuth Redirect URLs**
    ```bash
    # Google Console
-   https://exzosverse.com/api/auth/callback/google
+   https://auth.exzosverse.online/api/auth/callback/google
    
    # GitHub Settings  
-   https://exzosverse.com/api/auth/callback/github
+   https://auth.exzosverse.online/api/auth/callback/github
    
    # Twitter/X Developer
-   https://exzosverse.com/api/auth/callback/twitter
+   https://auth.exzosverse.online/api/auth/callback/twitter
    ```
 
 2. **Testar Funcionalidades**
@@ -77,22 +87,35 @@ exzosverse.online        A     76.76.19.124
    # Site principal
    https://exzosverse.com
    
-   # Admin
-   https://exzosverse.com/admin
+   # API pública
+   https://api.exzosverse.com/tools
    
-   # API
-   https://exzosverse.com/api/tools
+   # Admin (privado)
+   https://admin.exzosverse.online
    
-   # Auth
-   https://exzosverse.com/auth/signin
+   # Auth (privado)
+   https://auth.exzosverse.online/signin
+   
+   # Health checks
+   https://exzosverse.com/api/health
+   https://auth.exzosverse.online/health
    ```
 
 ### 🎉 **Pronto!**
 
-Seu site estará live em:
+**🌍 Domínio Público (exzosverse.com)**
 - **Site**: https://exzosverse.com
 - **API**: https://api.exzosverse.com  
 - **CDN**: https://cdn.exzosverse.com
+- **Docs**: https://docs.exzosverse.com
+
+**🔒 Domínio Privado (exzosverse.online)**
+- **Auth**: https://auth.exzosverse.online
+- **Admin**: https://admin.exzosverse.online
+- **Database**: https://data.exzosverse.online
+- **Cache**: https://cache.exzosverse.online
+- **Search**: https://search.exzosverse.online
+- **Analytics**: https://posthog.exzosverse.online
 
 ### 📊 **Features Funcionais**
 
