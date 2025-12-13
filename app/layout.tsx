@@ -1,5 +1,6 @@
 import "./styles.css"
 import type { Metadata, Viewport } from "next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { PropsWithChildren } from "react"
 import { Search } from "~/components/common/search"
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             </SearchProvider>
           </TooltipProvider>
         </NuqsAdapter>
+        <SpeedInsights />
       </body>
     </html>
   )
