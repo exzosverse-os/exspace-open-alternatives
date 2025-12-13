@@ -1,4 +1,5 @@
 import "./styles.css"
+import { Analytics } from "@vercel/analytics/next"
 import type { Metadata, Viewport } from "next"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import type { PropsWithChildren } from "react"
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             </SearchProvider>
           </TooltipProvider>
         </NuqsAdapter>
+        <Analytics />
       </body>
     </html>
   )
