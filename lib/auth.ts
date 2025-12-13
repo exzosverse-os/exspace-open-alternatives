@@ -28,6 +28,11 @@ export const auth = betterAuth({
       clientId: env.AUTH_GITHUB_ID,
       clientSecret: env.AUTH_GITHUB_SECRET,
     },
+
+    twitter: {
+      clientId: env.AUTH_X_ID,
+      clientSecret: env.AUTH_X_SECRET,
+    },
   },
 
   session: {

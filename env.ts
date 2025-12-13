@@ -23,6 +23,8 @@ export const env = createEnv({
     AUTH_GOOGLE_SECRET: z.string().min(1),
     AUTH_GITHUB_ID: z.string().min(1),
     AUTH_GITHUB_SECRET: z.string().min(1),
+    AUTH_X_ID: z.string().min(1),
+    AUTH_X_SECRET: z.string().min(1),
     MEILISEARCH_HOST: z.string().min(1).url(),
     MEILISEARCH_ADMIN_KEY: z.string().min(1),
     REDIS_REST_URL: z.string().min(1),
