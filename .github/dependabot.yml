@@ -1,0 +1,110 @@
+# Dependabot configuration for automated dependency management
+# Reference: https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+# Schedule reference: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates
+
+version: 2
+updates:
+  # NPM/Node.js dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "exzosverse-os"
+    labels:
+      - "dependencies"
+      - "npm"
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "chore(deps):"
+      prefix-development: "chore(deps-dev):"
+      include: "scope"
+    # Group dependencies by type and update type
+    groups:
+      # Development dependencies - all minor and patch updates in one PR
+      development-dependencies:
+        patterns:
+          - "@*"
+        exclude-patterns:
+          - "@angular*"
+          - "@nextjs*"
+        dependency-types:
+          - "dev"
+        update-types:
+          - "minor"
+          - "patch"
+      
+      # Production dependencies - patch updates in one PR
+      production-patch:
+        dependency-types:
+          - "prod"
+        update-types:
+          - "patch"
+      
+      # Major updates - separate PR for major version changes
+      major-updates:
+        update-types:
+          - "major"
+      
+      # Framework updates - specific patterns
+      frameworks:
+        patterns:
+          - "next*"
+          - "react"
+          - "typescript"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "05:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "exzosverse-os"
+    labels:
+      - "ci"
+      - "github-actions"
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "ci:"
+      include: "scope"
+    groups:
+      ci-updates:
+        patterns:
+          - "*"
+
+  # Dockerfile base image updates
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      time: "04:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "exzosverse-os"
+    labels:
+      - "dependencies"
+      - "docker"
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "chore(docker):"
+      include: "scope"
+
+# Multi-ecosystem grouping (optional - combines updates across ecosystems into single PR)
+# Uncomment to enable
+# multi-ecosystem-groups:
+#   all-dependencies:
+#     patterns:
+#       - "*"
+#     update-types:
+#       - "minor"
+#       - "patch"
